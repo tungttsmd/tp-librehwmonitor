@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
     <Platforms>x64</Platforms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -44,7 +44,7 @@
 		File="$(EnvFile)"
 		Overwrite="true"
 		Lines="
-INTERVAL_MS=12000
+INTERVAL_MS=6000
 BIND_IP=127.0.0.1
 PORT=1883
 MODE=stdout

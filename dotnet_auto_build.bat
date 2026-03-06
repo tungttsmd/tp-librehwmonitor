@@ -31,7 +31,7 @@ if %ERRORLEVEL% neq 0 (echo %RED%[ERROR]%RESET% Build that bai. & pause & exit /
 
 echo %CYAN%[INFO]%RESET% [4/4] Deploy...
 if exist "%DEPLOY_DIR%" rmdir /s /q "%DEPLOY_DIR%"
-xcopy "%BUILD_DIR%\bin\Release\net48" "%DEPLOY_DIR%\" /e /i /q
+xcopy "%BUILD_DIR%\bin\Release\net462" "%DEPLOY_DIR%\" /e /i /q
 copy "%ROOT%batFile\run.bat" "%DEPLOY_DIR%\" >nul
 cd /d "%ROOT%"
 rmdir /s /q "%BUILD_DIR%"

@@ -16,7 +16,7 @@ namespace LibreHwMonitor
         {
             Env.Load();
 
-            int interval = Env.GetInt("INTERVAL_MS", 12000);
+            int interval = Env.GetInt("INTERVAL_MS", 6000);
             string ip = Env.Get("BIND_IP", "127.0.0.1");
             int port = Env.GetInt("PORT", 1883);
 
@@ -33,11 +33,7 @@ namespace LibreHwMonitor
                 _metricWebserver = new MetricWebserver(ip, port, interval);
                 _metricWebserver.Start();
             
-                Console.WriteLine($"=============================================================================\n");
                 Console.WriteLine($"[INFO] Cấu hình dịch vụ .env: interval={interval}ms ip={ip} port={port}");
-                Console.WriteLine($"=============================================================================\n");
-                Console.WriteLine($"[INFO] Nhấn Ctrl+C để dừng dịch vụ...");
-                Console.WriteLine($"\n");
 
                 _shutdownEvent.WaitOne();
             }

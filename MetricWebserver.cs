@@ -51,9 +51,14 @@ namespace LibreHwMonitor
             // Start the HTTP listener loop
             Task.Run(ListenForRequests);
             Console.WriteLine($"\n");
-            Console.WriteLine($"[INFO] DỊCH VỤ NÊN ĐƯỢC CHẠY DƯỚI QUYỀN ADMINISTRATION ĐỂ LẤY ĐỦ CẢM BIẾN PHẦN CỨNG");
-            Console.WriteLine($"=============================================================================\n");
-            Console.WriteLine($"[INFO] Đã khởi động webserver tại http://{_ip}:{_port}/");
+            Console.WriteLine($"[INFO] LibreHWMonitor >> Đã khởi động webserver tại http://{_ip}:{_port}/");
+            Console.WriteLine($"[INFO] LibreHWMonitor >> Dữ liệu metrics (thực đo): http://{_ip}:{_port}/metrics");
+            Console.WriteLine($"[INFO] LibreHWMonitor >> Dữ liệu raw (toàn bộ): http://{_ip}:{_port}/raw");
+
+            Console.WriteLine($"\n");
+            Console.WriteLine($"[INFO] LibreHWMonitor >> VUI LÒNG CHẠY DƯỚI QUYỀN ADMINISTRATION ĐỂ LẤY ĐỦ CẢM BIẾN PHẦN CỨNG!");
+            Console.WriteLine($"\n");
+      
         }
 
         public void Stop()
@@ -70,7 +75,7 @@ namespace LibreHwMonitor
                 try
                 {
                     var context = await _listener.GetContextAsync();
-                    Console.WriteLine($"[REQUEST] From {context.Request.RemoteEndPoint} at {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+                    Console.WriteLine($"[INFO] >> Data requested by some process.");
                     _ = Task.Run(() => ProcessRequest(context));
                 }
                 catch (HttpListenerException) when (!_isRunning)
@@ -110,11 +115,11 @@ namespace LibreHwMonitor
                 else if (request.Url.AbsolutePath == "/")
                 {
                     responseString = "<html><body><h1>LibreHwMonitor Metrics Server</h1>" +
-                                   "<p>Dịch vụ có sẵn:</p>" +
-                                   "<ul>" +
-                                   "<li><a href='/metrics'>/metrics</a> - Dữ liệu metrics đã được xử lý</li>" +
-                                   "<li><a href='/raw'>/raw</a> - Dữ liệu hardware raw</li>" +
-                                   "</ul></body></html>";
+                                    "<p>Dịch vụ có sẵn:</p>" +
+                                    "<ul>" +
+                                    "<li><a href='/metrics'>/metrics</a> - Dữ liệu metrics đã được xử lý</li>" +
+                                    "<li><a href='/raw'>/raw</a> - Dữ liệu hardware raw</li>" +
+                                    "</ul></body></html>";
                     contentType = "text/html";
                 }
                 else
@@ -188,11 +193,11 @@ namespace LibreHwMonitor
                         _cachedJsonMetrics = cleanedJson;
                     }
                 
-                    Console.WriteLine($"[INFO] Webserver updated at {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+                    Console.WriteLine($"[INFO] LibreHWMonitor >> Sensor webserver refreshed...");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"[ERROR] Error updating metrics: {ex.Message}");
+                    Console.WriteLine($"[ERROR] LibreHWMonitor >> Error updating metrics: {ex.Message}");
                 }
 
                 Thread.Sleep(_updateIntervalMs);
