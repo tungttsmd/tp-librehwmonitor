@@ -174,10 +174,12 @@ namespace LibreHwMonitor
                 {
                     // Collect raw data
                     var hardwareData = DataRaw.CollectHardwareInfo();
-                    var dict = hardwareData.ToDictionary(
-                        h => h.Name,
-                        h => h
-                    );
+                    var dict = hardwareData
+                        .GroupBy(h => h.Name)
+                        .ToDictionary(
+                            g => g.Key,
+                            g => g.First()
+                        );
                     // Cache raw data
                     var rawJson = JsonConvert.SerializeObject(dict, jsonSettings);
                 
